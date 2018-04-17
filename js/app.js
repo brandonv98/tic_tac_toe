@@ -44,7 +44,7 @@ const uDash = (function (exports) {
 	};
 
 
-	// exports.handleStart(); // Run create game page.
+	exports.handleStart(); // Run create game page.
 	return exports;
 }(this.uDash || {}));
 
