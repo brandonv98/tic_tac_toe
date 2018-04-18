@@ -1,18 +1,78 @@
 /*jshint esversion: 6 */
-const newModule = (function (exports) {
-	"use strict";
-	exports = {
-		num: 5,
-		string: 'Hello there'
-	};
-	exports.helloBrandon = () => {
-		console.log('Hello Brandon');
-	};
-	exports.goodBye = () => {
-		console.log('goodbye bro...');
-	};
-	return exports;
-}(this.newModule || {}));
-
 /// // NOTE: assign operator
-const newObj = Object.assign({}, { hello: 'Brandon' }, { toString: 'VanCamp' });
+//
+// // NOTE: start of calls
+!(() => {
+	const nodes = Object.assign({}, { x: 'x' }, { o: 'o' });
+	const startScreen = document.querySelector('#start');
+	const gameBoard = document.querySelector('.boxes');
+	// // NOTE: Classes.
+	class FuncName {
+		constructor(data) {
+			// this.name = data.name;
+			// da
+		}
+	}
+
+	class Event extends FuncName {
+		// // TODO:  test // DEBUG: on funcName param
+		constructor(data) {
+			super();
+			this.node = data.node;
+			this.funcName = data.funcName;
+			this.type = data.type || 'click';
+			data.node.addEventListener(this.type, data.funcName, true);
+		}
+	}
+	eventDeclarations = () => {
+		let startButton = new Event({ node: startScreen, funcName: clickRemove });
+		let hover = new Event({ node: gameBoard, funcName: onHover, type: 'mouseover' });
+		let hoverOut = new Event({ node: gameBoard, funcName: onHoverOut, type: 'mouseout' });
+		let playerTurn = new Event({ node: gameBoard, funcName: playerClick });
+	};
+
+	clickRemove = (e) => { // Remove start screen overlay.
+		const target = e.target;
+		isTarget = target.innerHTML === 'Start game'; {
+			(isTarget) ? startScreen.remove(): null;
+		}
+		setTimeout(function () { // Set player one to first active player.
+			uDash.playerActive(true, 0);
+		}, 500);
+	};
+	onHover = (e) => {
+		const target = e.target;
+		player = uDash.playerTurn + 1;
+		uDash.handleHover(e.target, `box box-filled-${player}`);
+
+	};
+	onHoverOut = (e) => {
+		const target = e.target;
+		// player = uDash.playerTurn + 1;
+		// playerLast = uDash.handleHoverOut(player);
+		// console.log(player, playerLast);
+		// let box = 'box'; ${box}
+		// isPlayedSpot = target.id.startsWith('player'); {
+		// 	(isPlayedSpot) ? null: target.setAttribute('class', 'box');
+		// }
+		uDash.handleHover(e.target, 'box');
+
+	};
+	playerClick = (e) => {
+		player = uDash.playerTurn + 1;
+		const target = e.target;
+		target.setAttribute('class', `box box-filled-${player}`);
+		target.setAttribute('id', `player${player}-played`);
+
+
+		uDash.playerActive(false, uDash.playerTurn); // Remove old active player
+		uDash.nextPlayerTurn(uDash.playerTurn, setTimeout(function () { // Set next player active player.
+			uDash.playerActive(true, uDash.playerTurn);
+		}, 500));
+
+
+
+	};
+
+	eventDeclarations(); // call eventDeclarations.
+})();
