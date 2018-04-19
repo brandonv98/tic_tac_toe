@@ -43,20 +43,11 @@
 	onHover = (e) => {
 		const target = e.target;
 		player = uDash.playerTurn + 1;
-		uDash.handleHover(e.target, `box box-filled-${player}`);
+		uDash.handleHover(e.target, `box-preset-${player} box`);
 
 	};
 	onHoverOut = (e) => {
-		const target = e.target;
-		// player = uDash.playerTurn + 1;
-		// playerLast = uDash.handleHoverOut(player);
-		// console.log(player, playerLast);
-		// let box = 'box'; ${box}
-		// isPlayedSpot = target.id.startsWith('player'); {
-		// 	(isPlayedSpot) ? null: target.setAttribute('class', 'box');
-		// }
 		uDash.handleHover(e.target, 'box');
-
 	};
 	playerClick = (e) => {
 		player = uDash.playerTurn + 1;
@@ -64,14 +55,13 @@
 		target.setAttribute('class', `box box-filled-${player}`);
 		target.setAttribute('id', `player${player}-played`);
 
-
 		uDash.playerActive(false, uDash.playerTurn); // Remove old active player
 		uDash.nextPlayerTurn(uDash.playerTurn, setTimeout(function () { // Set next player active player.
 			uDash.playerActive(true, uDash.playerTurn);
 		}, 500));
 
 
-
+		uDash.isWonGame();
 	};
 
 	eventDeclarations(); // call eventDeclarations.

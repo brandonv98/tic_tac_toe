@@ -10,6 +10,9 @@ const uDash = (function (exports) {
 		playerTurn: 0,
 		players: document.querySelectorAll('.players'),
 		isActive: false,
+		boxNodes: [...document.querySelectorAll('.box')],
+		player1: 0,
+		player2: 0
 	};
 	exports.playerToString = (playerNum) => {
 		const isPlayerOne = playerNum === 0;
@@ -24,7 +27,58 @@ const uDash = (function (exports) {
 		}
 	};
 	exports.isWonGame = (gameBoard) => {
-		console.log(gameBoard);
+		const board = document.querySelector('.boxes');
+		const boxes = exports.boxNodes;
+		// let isPlayed = board.childNodes[7]
+		const row = 1 + 2 + 3;
+		const row1 = 4 + 5 + 6;
+		const row2 = 7 + 8 + 9;
+		const rowX = 1 + 5 + 9;
+		const isWon = board.childNodes;
+		let player1;
+		let player2;
+		const myLoop = boxes.map((item, i, all) => {
+			let played = item.id.startsWith('player');
+			i += 1;
+			// const center = Math.ceil(all.length / 2);
+			// let right = 4;
+			// let left = 6;
+			// let total = right + left + center;
+			// TODO: Fix THIS up not sure exacly how to do this...
+			// My idea is to cross id's of the player with the location of the
+			// players placement on the board via index. But idk how yet.
+			console.log(played, all[all.length - i], i);
+			let player1 = item.id.startsWith('player1');
+			// console.log(player1, 'TESING!!!!', player1 === all[8].id.startsWith('player1'));
+			if (player1) {
+				console.log(item.nextElementSibling);
+				if (item.nextElementSibling === null) {
+					console.log(item.previousElementSibling);
+					if (item.nextElementSibling.id === undefined) {
+						// console.log(item.previousElementSibling);
+					} else if (item.nextElementSibling.id === player1) {
+						console.log(item.previousElementSibling);
+					}
+				}
+
+			}
+			// console.log();
+			if (played) {
+				const getPlayerPlayed = item.id.startsWith(`player${exports.playerTurn}`);
+				console.log(played, getPlayerPlayed);
+				if (getPlayerPlayed) {
+					// console.log(`exports.player${exports.playerTurn}`);
+					// return `exports.player${exports.playerTurn}`;
+					return exports.player1 += i;
+				}
+			}
+		});
+		if (exports.player1 >= 21) {
+			console.log('Player 1 Won!');
+		}
+		console.log(exports.player1, exports.player2);
+		console.log(row, row1, row2, rowX);
+
 	};
 	exports.nextPlayerTurn = (nextPlayer) => { // Decide who is next.
 		const player = nextPlayer;

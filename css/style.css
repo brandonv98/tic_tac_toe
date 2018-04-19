@@ -192,6 +192,14 @@ h1 {
   margin-right: 0;
 }
 
+.boxes .box-preset-1 {
+  background-image: url(../img/o.svg);
+}
+
+.boxes .box-preset-2 {
+  background-image: url(../img/x.svg);
+}
+
 .boxes .box-filled-1 {
   background-color: #FFA000;
   background-image: url(../img/o.svg);
