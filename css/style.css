@@ -192,7 +192,7 @@ h1 {
   margin-right: 0;
 }
 
-.winner {
+.winner-1 {
   background-image: url(../img/o.svg);
   background: #000000;
   box-sizing: border-box;
@@ -200,6 +200,26 @@ h1 {
   background-size: 150px 150px;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+.winner-2 {
+  background-image: url(../img/x.svg);
+  background: #000000;
+  box-sizing: border-box;
+  transition: 0.2s ease;
+  background-size: 150px 150px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.winner-1-background {
+  background-color: #FFA000;
+  /* transition: 0.2s ease; */
+}
+
+.winner-2-background {
+  background-color: #3688C3;
+  /* transition: 0.2s ease; */
 }
 
 .boxes .box-preset-1 {

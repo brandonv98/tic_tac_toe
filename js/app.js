@@ -40,14 +40,18 @@ const uDash = (function (exports) {
 		const boxes = exports.boxNodes; // loop threw the board li nodes.
 		const playerNum = player; // player number;
 		if (exports.turnState >= 3) { // Check amount of turns made.
+			// let playCounts = 0;
 			player -= 1;
 			const myLoop = boxes.map((item, i, all) => {
+				// i += 1; // Keep array checking count at 1 && ! 0;
 				let played = item.id.startsWith(`player${playerNum}`);
 				if (played) {
-					exports.player[player].push(i); // Push the position of player location on the board.
+					// playCounts++;
+					// console.log(playerNum, playCounts, playCounts);
+					exports.player[player].push(i + 1); // Push the position of player location on the board.
 				}
 			});
-			exports.checkIfWon(exports.player[player], exports.winOpt);
+			exports.checkIfWon(exports.player[player], exports.winOpt, player); // Check if player has won.
 		}
 		console.log(exports.player);
 		exports.turnState += 1;
@@ -64,28 +68,37 @@ const uDash = (function (exports) {
 		const div = document.createElement('DIV');
 		body.appendChild(div);
 	};
-	exports.checkIfWon = (players, winArray) => { // Check if any player has won.
-		const playerArray = players.reduce((acc, cur) => acc + cur, 0);
-		const winOpt = winArray.map((item, i, all) => {
-			const reducIt = all[i].reduce(
-				(acc, cur) => acc + cur, 0
-			);
-			if (playerArray === reducIt) {
-				exports.showWinnerPage(exports.playerTurn - 1); // Show the winning player page.
-			}
+	exports.checkIfWon = (players, winArray, playerNum) => { // Check if any player has won.
+
+		const playerArray = players.map((item, i, all) => {
+			let play = all.slice(i, i + 3);
+			console.log(play);
+
+			const winOpt = winArray.map((item, i, all) => {
+				console.log(JSON.stringify(play), JSON.stringify(item));
+				if (JSON.stringify(play) === JSON.stringify(item)) {
+					exports.showWinnerPage({ playerNum }); // Show the winning player page.
+				}
+			});
 		});
 	};
 	exports.showWinnerPage = (props) => {
-		console.log('Winner!');
 		exports.appendHTML(exports.htmlSnippets().win); // Onload show start page.
-		let message = 'Player 1 wins';
-		const finish = document.querySelector('#finish');
+		const playerNum = props.playerNum + 1;
+		let message = `Player ${playerNum} wins`; // Player message
 
-		finish.setAttribute('style', 'background-color: orange;');
+		const finish = document.querySelector('#finish');
+		finish.setAttribute('class', `screen screen-win winner-${playerNum}-background`);
 		const p = document.querySelector('.message');
 		p.innerHTML = message;
-		// p.parentNode.setAttribute('class', 'winner');
+		p.parentNode.setAttribute('class', `winner-${playerNum}-null`);
 
+		const button = document.querySelector('.button');
+		console.log(button);
+		button.addEventListener('click', (e) => {
+			e.preventDefault();
+			location.reload(); // Restart the game
+		});
 	};
 	exports.htmlSnippets = (props, message = ' ') => {
 		console.log(props);
