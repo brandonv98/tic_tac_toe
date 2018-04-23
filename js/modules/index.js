@@ -61,7 +61,8 @@
 		}, 500));
 
 
-		uDash.isWonGame();
+		uDash.pushPlayerMove(player);
+
 	};
 
 	eventDeclarations(); // call eventDeclarations.
