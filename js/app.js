@@ -4,7 +4,6 @@ const uDash = (function (exports) {
 	"use strict";
 	const body = document.querySelector('BODY');
 	exports = {
-		// bodyHidden: body.firstElementChild.style.display = 'none',
 		turnState: 0,
 		players: 2,
 		playerTurn: 0,
@@ -40,14 +39,11 @@ const uDash = (function (exports) {
 		const boxes = exports.boxNodes; // loop threw the board li nodes.
 		const playerNum = player; // player number;
 		if (exports.turnState >= 3) { // Check amount of turns made.
-			// let playCounts = 0;
 			player -= 1;
 			const myLoop = boxes.map((item, i, all) => {
 				// i += 1; // Keep array checking count at 1 && ! 0;
 				let played = item.id.startsWith(`player${playerNum}`);
 				if (played) {
-					// playCounts++;
-					// console.log(playerNum, playCounts, playCounts);
 					exports.player[player].push(i + 1); // Push the position of player location on the board.
 				}
 			});
@@ -170,7 +166,6 @@ const uDash = (function (exports) {
 		exports.appendHTML(exports.htmlSnippets().start); // Onload show start page.
 		exports.winOptions();
 	};
-
 
 	exports.handleStart(); // Run create game page.
 	return exports;

@@ -52,17 +52,20 @@
 	playerClick = (e) => {
 		player = uDash.playerTurn + 1;
 		const target = e.target;
-		target.setAttribute('class', `box box-filled-${player}`);
-		target.setAttribute('id', `player${player}-played`);
+		const currentPlayer = target.id.startsWith(`player`);
+		if (currentPlayer) { // Check if spot was played yet.
+			return;
+		} else {
+			target.setAttribute('class', `box box-filled-${player}`);
+			target.setAttribute('id', `player${player}-played`);
 
-		uDash.playerActive(false, uDash.playerTurn); // Remove old active player
-		uDash.nextPlayerTurn(uDash.playerTurn, setTimeout(function () { // Set next player active player.
-			uDash.playerActive(true, uDash.playerTurn);
-		}, 500));
+			uDash.playerActive(false, uDash.playerTurn); // Remove old active player
+			uDash.nextPlayerTurn(uDash.playerTurn, setTimeout(function () { // Set next player active player.
+				uDash.playerActive(true, uDash.playerTurn);
+			}, 500));
 
-
-		uDash.pushPlayerMove(player);
-
+			uDash.pushPlayerMove(player);
+		}
 	};
 
 	eventDeclarations(); // call eventDeclarations.
