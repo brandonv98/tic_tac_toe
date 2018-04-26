@@ -10,8 +10,10 @@ const uDash = (function (exports) {
 		players: document.querySelectorAll('.players'),
 		isActive: false,
 		boxNodes: [...document.querySelectorAll('.box')],
-		player: [new Array(), new Array()], // P1 == 0 && p2 === 1;
+		player: [[], []], // P1 == 0 && p2 === 1;
+		playedPlayerSpots: [[], [], ],
 		winOpt: new Array(),
+		maxMoves: 3,
 	};
 	exports.playerToString = (playerNum) => {
 		const isPlayerOne = playerNum === 0;
@@ -25,7 +27,7 @@ const uDash = (function (exports) {
 			(isPlayedSpot) ? null: target.setAttribute('class', `${className}`);
 		}
 	};
-	exports.winOptions = () => {
+	exports.winOptions = () => { // Add all win able spots.
 		exports.winOpt.push([1, 2, 3]);
 		exports.winOpt.push([4, 5, 6]);
 		exports.winOpt.push([7, 8, 9]);
@@ -38,17 +40,18 @@ const uDash = (function (exports) {
 	exports.pushPlayerMove = (player) => {
 		const boxes = exports.boxNodes; // loop threw the board li nodes.
 		const playerNum = player; // player number;
-		if (exports.turnState >= 3) { // Check amount of turns made.
+		if (true) { // Check amount of turns made.
 			player -= 1;
+			exports.player[player].splice(0); // Remove all before push
 			const myLoop = boxes.map((item, i, all) => {
-				// i += 1; // Keep array checking count at 1 && ! 0;
 				let played = item.id.startsWith(`player${playerNum}`);
 				if (played) {
 					exports.player[player].push(i + 1); // Push the position of player location on the board.
 				}
 			});
-			exports.checkIfWon(exports.player[player], exports.winOpt, player); // Check if player has won.
+
 		}
+		exports.checkIfWon(exports.player[player], exports.winOpt, player); // Check if player has won.
 		console.log(exports.player);
 		exports.turnState += 1;
 	};
@@ -64,30 +67,36 @@ const uDash = (function (exports) {
 		const div = document.createElement('DIV');
 		body.appendChild(div);
 	};
+
 	exports.checkIfWon = (players, winArray, playerNum) => { // Check if any player has won.
-
-		const playerArray = players.map((item, i, all) => {
-			let play = all.slice(i, i + 3);
-			console.log(play);
-
-			const winOpt = winArray.map((item, i, all) => {
-				console.log(JSON.stringify(play), JSON.stringify(item));
-				if (JSON.stringify(play) === JSON.stringify(item)) {
-					exports.showWinnerPage({ playerNum }); // Show the winning player page.
-				}
-			});
-		});
+		const winOpt = winArray
+			.filter((items, index) => {
+				let arrayCheckIfWon = items.filter(spots => spots == players.filter(moves => moves == spots)); {
+					return arrayCheckIfWon.length === 3;
+				};
+			}); {
+			(winOpt.length) ?
+			exports.showWinnerPage({ playerNum }): false; // Show the winning player page.
+		};
 	};
+
 	exports.showWinnerPage = (props) => {
 		exports.appendHTML(exports.htmlSnippets().win); // Onload show start page.
 		const playerNum = props.playerNum + 1;
 		let message = `Player ${playerNum} wins`; // Player message
-
 		const finish = document.querySelector('#finish');
+
 		finish.setAttribute('class', `screen screen-win winner-${playerNum}-background`);
 		const p = document.querySelector('.message');
-		p.innerHTML = message;
+		p.innerHTML = message + `<span class="winner-${playerNum}"></span>`;
+		const span = finish.querySelector('SPAN');
 		p.parentNode.setAttribute('class', `winner-${playerNum}-null`);
+
+		if (playerNum === 1) {
+			span.innerHTML = exports.htmlSnippets().player1;
+		} else if (playerNum === 2) {
+			span.innerHTML = exports.htmlSnippets().player2;
+		}
 
 		const button = document.querySelector('.button');
 		console.log(button);
@@ -110,7 +119,7 @@ const uDash = (function (exports) {
       <div class="screen screen-win" id="finish">
         <header>
           <h1>Tic Tac Toe</h1>
-					<span class="winner"></span>
+
           <p class="message"></p>
           <a href="#" class="button">New game</a>
         </header>
@@ -143,7 +152,16 @@ const uDash = (function (exports) {
             <g transform="translate(200.000000, 60.000000)"><path d="M21 36.6L21 36.6C29.6 36.6 36.6 29.6 36.6 21 36.6 12.4 29.6 5.4 21 5.4 12.4 5.4 5.4 12.4 5.4 21 5.4 29.6 12.4 36.6 21 36.6L21 36.6ZM21 42L21 42C9.4 42 0 32.6 0 21 0 9.4 9.4 0 21 0 32.6 0 42 9.4 42 21 42 32.6 32.6 42 21 42L21 42Z"/></g>
           </g>
         </g>
-      </svg>`
+      </svg>`,
+			player2: `
+			<svg xmlns="http://www.w3.org/2000/svg" width="42" height="43" viewbox="0 0 42 43" version="1.1">
+				<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+					<g transform="translate(-718.000000, -60.000000)" fill="#000000">
+						<g transform="translate(739.500000, 81.500000) rotate(-45.000000) translate(-739.500000, -81.500000) translate(712.000000, 54.000000)"><path
+							d="M30 30.1L30 52.5C30 53.6 29.1 54.5 28 54.5L25.5 54.5C24.4 54.5 23.5 53.6 23.5 52.5L23.5 30.1 2 30.1C0.9 30.1 0 29.2 0 28.1L0 25.6C0 24.5 0.9 23.6 2 23.6L23.5 23.6 23.5 2.1C23.5 1 24.4 0.1 25.5 0.1L28 0.1C29.1 0.1 30 1 30 2.1L30 23.6 52.4 23.6C53.5 23.6 54.4 24.5 54.4 25.6L54.4 28.1C54.4 29.2 53.5 30.1 52.4 30.1L30 30.1Z"/></g>
+					</g>
+				</g>
+			</svg>`
 		}
 		return HTML;
 	};
