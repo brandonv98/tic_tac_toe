@@ -72,11 +72,11 @@ const uDash = (function (exports) {
 		const winOpt = winArray
 			.filter((items, index) => {
 				let arrayCheckIfWon = items.filter(spots => spots == players.filter(moves => moves == spots)); {
-					return arrayCheckIfWon.length === 3;
+					return (arrayCheckIfWon.length === 3 ? true : false); // return true if player has won game.
 				};
 			}); {
-			(winOpt.length) ?
-			exports.showWinnerPage({ playerNum }): false; // Show the winning player page.
+			(winOpt.length ?
+				exports.showWinnerPage({ playerNum }) : false); // Show the winning player page.
 		};
 	};
 
