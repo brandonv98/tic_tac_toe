@@ -75,6 +75,7 @@ const uDash = (function (exports) {
 					return (arrayCheckIfWon.length === 3 ? true : false); // return true if player has won game.
 				};
 			}); {
+			// NOTE: Add draw page....
 			(winOpt.length ?
 				exports.showWinnerPage({ playerNum }) : false); // Show the winning player page.
 		};
