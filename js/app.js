@@ -27,7 +27,7 @@ const uDash = (function (exports) {
 			(isPlayedSpot) ? null: target.setAttribute('class', `${className}`);
 		}
 	};
-	exports.winOptions = () => { // Add all win able spots.
+	exports.winOptions = () => { // Add all winnable spots.
 		exports.winOpt.push([1, 2, 3]);
 		exports.winOpt.push([4, 5, 6]);
 		exports.winOpt.push([7, 8, 9]);
