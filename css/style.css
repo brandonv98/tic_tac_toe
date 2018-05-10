@@ -220,6 +220,10 @@ span svg {
   z-index: -5;
 }
 
+.winner-drawMessage-background {
+  background: #54D17A;
+}
+
 .winner-1-background {
   background-color: #FFA000;
 }

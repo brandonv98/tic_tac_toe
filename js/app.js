@@ -15,6 +15,13 @@ const uDash = (function (exports) {
 		winOpt: new Array(),
 		maxMoves: 3,
 	};
+	exports.isGameDraw = (gameRound) => {
+		if (gameRound === 9) {
+			const drawMessage = 'Game is a Draw.';
+			const playerNum = 'drawMessage';
+			exports.showWinnerPage({ drawMessage, playerNum });
+		}
+	};
 	exports.playerToString = (playerNum) => {
 		const isPlayerOne = playerNum === 0;
 		let player = ''; {
@@ -77,25 +84,27 @@ const uDash = (function (exports) {
 			}); {
 			// NOTE: Add draw page....
 			(winOpt.length ?
-				exports.showWinnerPage({ playerNum }) : false); // Show the winning player page.
+				exports.showWinnerPage({ playerNum: playerNum + 1 }) : false); // Show the winning player page.
 		};
 	};
-
 	exports.showWinnerPage = (props) => {
 		exports.appendHTML(exports.htmlSnippets().win); // Onload show start page.
-		const playerNum = props.playerNum + 1;
-		let message = `Player ${playerNum} wins`; // Player message
+		let message = `Player ${props.playerNum} wins <span class="winner-${props.playerNum}"></span>`; // Player message
+		if (props.playerNum === 'drawMessage') {
+			message = props.drawMessage; // If game is a draw show new message.
+		}
+
 		const finish = document.querySelector('#finish');
 
-		finish.setAttribute('class', `screen screen-win winner-${playerNum}-background`);
+		finish.setAttribute('class', `screen screen-win winner-${props.playerNum}-background`);
 		const p = document.querySelector('.message');
-		p.innerHTML = message + `<span class="winner-${playerNum}"></span>`;
+		p.innerHTML = message;
 		const span = finish.querySelector('SPAN');
-		p.parentNode.setAttribute('class', `winner-${playerNum}-null`);
+		p.parentNode.setAttribute('class', `winner-${props.playerNum}-null`);
 
-		if (playerNum === 1) {
+		if (props.playerNum === 1) {
 			span.innerHTML = exports.htmlSnippets().player1;
-		} else if (playerNum === 2) {
+		} else if (props.playerNum === 2) {
 			span.innerHTML = exports.htmlSnippets().player2;
 		}
 
@@ -106,6 +115,7 @@ const uDash = (function (exports) {
 			location.reload(); // Restart the game
 		});
 	};
+
 	exports.htmlSnippets = (props, message = ' ') => {
 		console.log(props);
 		const HTML = {
@@ -177,7 +187,6 @@ const uDash = (function (exports) {
 		{
 			(isActive) ? exports.players[player].setAttribute('class', 'players active'): exports.players[player].setAttribute('class', 'players');
 		}
-
 	};
 
 	exports.handleStart = () => { // add start overlay on build.

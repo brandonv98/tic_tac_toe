@@ -65,6 +65,7 @@
 			}, 500));
 
 			uDash.pushPlayerMove(player);
+			uDash.isGameDraw(uDash.turnState);
 		}
 	};
 
