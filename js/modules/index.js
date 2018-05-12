@@ -1,30 +1,20 @@
 /*jshint esversion: 6 */
 /// // NOTE: assign operator
-//
 // // NOTE: start of calls
 !(() => {
 	const nodes = Object.assign({}, { x: 'x' }, { o: 'o' });
 	const startScreen = document.querySelector('#start');
 	const gameBoard = document.querySelector('.boxes');
 	// // NOTE: Classes.
-	class FuncName {
+	class Event { // Class for events.
 		constructor(data) {
-			// this.name = data.name;
-		}
-	}
-
-	class Event extends FuncName {
-		// // TODO:  !Test 
-		// DEBUG: on funcName param
-		constructor(data) {
-			super();
 			this.node = data.node;
 			this.funcName = data.funcName;
 			this.type = data.type || 'click';
 			data.node.addEventListener(this.type, data.funcName, true);
 		}
 	}
-	eventDeclarations = () => {
+	eventDeclarations = () => { // Events used in project
 		let startButton = new Event({ node: startScreen, funcName: clickRemove });
 		let hover = new Event({ node: gameBoard, funcName: onHover, type: 'mouseover' });
 		let hoverOut = new Event({ node: gameBoard, funcName: onHoverOut, type: 'mouseout' });

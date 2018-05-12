@@ -59,7 +59,6 @@ const uDash = (function (exports) {
 
 		}
 		exports.checkIfWon(exports.player[player], exports.winOpt, player); // Check if player has won.
-		console.log(exports.player);
 		exports.turnState += 1;
 	};
 	exports.nextPlayerTurn = (nextPlayer) => { // Decide who is next.
@@ -82,7 +81,7 @@ const uDash = (function (exports) {
 					return (arrayCheckIfWon.length === 3 ? true : false); // return true if player has won game.
 				};
 			}); {
-			// NOTE: Add draw page....
+			// NOTE: show player won overlay.
 			(winOpt.length ?
 				exports.showWinnerPage({ playerNum: playerNum + 1 }) : false); // Show the winning player page.
 		};
@@ -117,7 +116,6 @@ const uDash = (function (exports) {
 	};
 
 	exports.htmlSnippets = (props, message = ' ') => {
-		console.log(props);
 		const HTML = {
 			start: `
         <div class="screen screen-start" id="start">
@@ -182,7 +180,6 @@ const uDash = (function (exports) {
 	};
 	////////////////////////////////////////////////////////
 	// ================================================== //
-	// NOTE:
 	exports.playerActive = (isActive, player) => {
 		{
 			(isActive) ? exports.players[player].setAttribute('class', 'players active'): exports.players[player].setAttribute('class', 'players');
