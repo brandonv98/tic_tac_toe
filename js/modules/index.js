@@ -10,12 +10,12 @@
 	class FuncName {
 		constructor(data) {
 			// this.name = data.name;
-			// da
 		}
 	}
 
 	class Event extends FuncName {
-		// // TODO:  test // DEBUG: on funcName param
+		// // TODO:  !Test 
+		// DEBUG: on funcName param
 		constructor(data) {
 			super();
 			this.node = data.node;
